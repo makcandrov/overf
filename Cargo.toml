@@ -7,12 +7,12 @@ homepage = "https://github.com/makcandrov/overf"
 documentation = "https://docs.rs/overf"
 description = "Customize overflow behavior in mathematical operations."
 license = "MIT OR Apache-2.0"
-keywords = ["math", "blocks", "overflow"]
+keywords = ["overf", "overflow", "checked", "macro"]
 
 [dependencies]
 proc-macro2 = "1"
 quote = "1"
-syn = { version = "2", features = ["visit-mut", "full"]}
+syn = { version = "2", features = ["visit-mut", "full"] }
 
 [lib]
 proc-macro = true
