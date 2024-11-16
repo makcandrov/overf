@@ -23,6 +23,7 @@ pub struct Checked;
 pub struct Overflowing;
 pub struct Saturating;
 pub struct Propagating;
+pub struct Wrapping;
 
 impl MathBlock for Checked {
     fn method_ident_bin(op: BinOp) -> Option<&'static str> {
@@ -182,5 +183,27 @@ impl MathBlock for Propagating {
             expr: Box::new(expr),
             question_token: Question(op.span()),
         })
+    }
+}
+
+impl MathBlock for Wrapping {
+    fn method_ident_bin(op: BinOp) -> Option<&'static str> {
+        match op {
+            BinOp::Add(_) | BinOp::AddAssign(_) => Some("wrapping_add"),
+            BinOp::Sub(_) | BinOp::SubAssign(_) => Some("wrapping_sub"),
+            BinOp::Mul(_) | BinOp::MulAssign(_) => Some("wrapping_mul"),
+            BinOp::Div(_) | BinOp::DivAssign(_) => Some("wrapping_div"),
+            BinOp::Rem(_) | BinOp::RemAssign(_) => Some("wrapping_rem"),
+            BinOp::Shl(_) | BinOp::ShlAssign(_) => Some("wrapping_shl"),
+            BinOp::Shr(_) | BinOp::ShrAssign(_) => Some("wrapping_shr"),
+            _ => None,
+        }
+    }
+
+    fn method_ident_un(op: UnOp) -> Option<&'static str> {
+        match op {
+            UnOp::Neg(_) => Some("wrapping_neg"),
+            _ => None,
+        }
     }
 }

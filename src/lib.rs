@@ -1,7 +1,7 @@
 #![cfg_attr(not(test), warn(unused_crate_dependencies))]
 #![doc = include_str!("../README.md")]
 
-use block::{Checked, MathBlock, Overflowing, Propagating, Saturating};
+use block::{Checked, MathBlock, Overflowing, Propagating, Saturating, Wrapping};
 use quote::quote;
 use syn::{parse_macro_input, visit_mut::VisitMut, Block};
 use visitor::MathBlockVisitor;
@@ -100,6 +100,27 @@ pub fn saturating(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 #[proc_macro]
 pub fn propagating(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     expand::<Propagating>(input)
+}
+
+/// Defines a block of code where all mathematical operations use wrapping methods.
+///
+/// When an operation overflows, it will not panic; instead, it will return the result of the operation, wrapping around if necessary.
+///
+/// # Example
+///
+/// ```rust
+/// use overf::wrapping;
+///
+/// fn main() {
+///     wrapping! {
+///         let a = 10usize + 5usize;
+///         let b = 200usize - 300usize; // Overflows
+///     }
+/// }
+/// ```
+#[proc_macro]
+pub fn wrapping(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    expand::<Wrapping>(input)
 }
 
 /// Resets the overflow behavior to the default behavior of Rust.

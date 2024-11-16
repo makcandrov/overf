@@ -1,6 +1,6 @@
 #![allow(unused)]
 
-use overf::{checked, default, overflowing, propagating, saturating};
+use overf::{checked, default, overflowing, propagating, saturating, wrapping};
 
 #[test]
 fn test_checked_arithmetic() {
@@ -63,6 +63,27 @@ fn test_saturating_arithmetic() {
             let h = a + b; // Should not panic
             let i = b - d; // Should not panic
         }
+    }
+}
+
+#[test]
+fn test_wrapping_arithmetic() {
+    wrapping! {
+        let a = 10usize + 5usize;
+        let b = 20usize - 10usize;
+        let c = 3usize * 7usize;
+        let d = 21usize / 3usize;
+        let e = 10usize % 3usize;
+        let f = 1usize << 3;
+        let g = 8usize >> 2;
+
+        // Nested
+        default! {
+            let h = a + b; // Should not panic
+            let i = b - d; // Should not panic
+        }
+
+        let k = -g;
     }
 }
 
