@@ -175,4 +175,12 @@ impl MathBlock for Propagating {
             question_token: Question(op.span()),
         })
     }
+
+    fn finalize_un(expr: Expr, op: UnOp) -> Expr {
+        Expr::Try(ExprTry {
+            attrs: Vec::new(),
+            expr: Box::new(expr),
+            question_token: Question(op.span()),
+        })
+    }
 }
