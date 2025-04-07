@@ -3,7 +3,7 @@
 
 use block::{Checked, MathBlock, Overflowing, Propagating, Saturating, Wrapping};
 use quote::quote;
-use syn::{parse_macro_input, visit_mut::VisitMut, Block};
+use syn::{parse::Parse, parse_macro_input, visit_mut::VisitMut, Block, Stmt};
 use visitor::MathBlockVisitor;
 
 mod block;
@@ -148,25 +148,25 @@ pub fn default(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 }
 
 fn expand<B: MathBlock>(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
-    let input2 = proc_macro2::TokenStream::from(input);
-    let input = proc_macro::TokenStream::from(quote! { { #input2 } });
-    let block = parse_macro_input!(input as Block);
-    match try_expand::<B>(block) {
-        Ok(res) => res.into(),
-        Err(err) => {
-            let error = err.to_compile_error();
-            quote! {
-                #error
-            }
-            .into()
+    struct Stmts(Vec<Stmt>);
+
+    impl Parse for Stmts {
+        fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+            Block::parse_within(input).map(Self)
         }
+    }
+
+    let stmts = parse_macro_input!(input as Stmts);
+    match try_expand::<B>(stmts.0) {
+        Ok(res) => res.into(),
+        Err(err) => err.to_compile_error().into(),
     }
 }
 
-fn try_expand<B: MathBlock>(mut block: Block) -> syn::Result<proc_macro2::TokenStream> {
-    MathBlockVisitor::<B>::new().visit_block_mut(&mut block);
-    let mut res = quote! {};
-    for stmt in block.stmts {
+fn try_expand<B: MathBlock>(stmts: Vec<Stmt>) -> syn::Result<proc_macro2::TokenStream> {
+    let mut res = proc_macro2::TokenStream::new();
+    for mut stmt in stmts {
+        MathBlockVisitor::<B>::new().visit_stmt_mut(&mut stmt);
         res.extend(quote! { #stmt });
     }
     Ok(res)
