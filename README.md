@@ -7,21 +7,6 @@
 
 Define the overflow behavior of mathematical operations within blocks of code. This library provides the macros `checked!`, `overflowing!`, `saturating!`, `propagating!` and `default!`, enabling you to easily manage overflow in nested contexts.
 
-# Features
-
-- **Customizable Overflow Behavior**: Choose between checked, overflowing, and saturating operations for any block of code.
-- **Nested Blocks**: Define different overflow behaviors in nested blocks for more granular control.
-- **Reset Behavior**: Use the `default!` macro to reset the overflow behavior back to the default.
-
-# Installation
-
-Add the following to your `Cargo.toml`:
-
-```toml
-[dependencies]
-overf = "0.1"
-```
-
 # Usage
 
 ```rust
@@ -43,4 +28,25 @@ fn main() {
         let result = 1usize + usize::MAX;
     }
 }
+```
+
+# Features
+
+- **Customizable Overflow Behavior**: Choose between checked, overflowing, and saturating operations for any block of code.
+- **Nested Blocks**: Define different overflow behaviors in nested blocks for more granular control.
+- **Reset Behavior**: Use the `default!` macro to reset the overflow behavior back to the default.
+
+# Installation
+
+Add `overf` to your `Cargo.toml`:
+
+```toml
+[dependencies]
+overf = "0.1"
+```
+
+Or run the following command:
+
+```shell
+cargo add overf
 ```
