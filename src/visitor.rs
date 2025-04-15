@@ -16,7 +16,7 @@ pub struct MathBlockVisitor<B>(pub PhantomData<B>);
 
 impl<B> MathBlockVisitor<B> {
     pub fn new() -> Self {
-        Self(PhantomData::default())
+        Self(PhantomData)
     }
 }
 
@@ -47,7 +47,7 @@ impl<B: MathBlock> VisitMut for MathBlockVisitor<B> {
                     let expr = B::finalize_bin(Expr::MethodCall(call), op);
 
                     Expr::Assign(ExprAssign {
-                        attrs: attrs,
+                        attrs,
                         left,
                         eq_token: Eq(op.span()),
                         right: Box::new(expr),

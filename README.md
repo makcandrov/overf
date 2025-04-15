@@ -12,21 +12,19 @@ Define the overflow behavior of mathematical operations within blocks of code. T
 ```rust
 use overf::{checked, overflowing, saturating, default};
 
-fn main() {
-    checked! {
-        let result = 1usize + 1usize;
-        let sum = default! { 2usize + 2usize }; // Use default behavior
-        let difference = 5usize - 3usize;
+checked! {
+    let result = 1usize + 1usize;
+    let sum = default! { 2usize + 2usize }; // Use default behavior
+    let difference = 5usize - 3usize;
 
-        // Nested blocks
-        saturating! {
-            let total = 100u8 - 200u8;
-        }
+    // Nested blocks
+    saturating! {
+        let total = 100u8 - 200u8;
     }
+}
 
-    overflowing! {
-        let result = 1usize + usize::MAX;
-    }
+overflowing! {
+    let result = 1usize + usize::MAX;
 }
 ```
 

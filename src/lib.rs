@@ -19,12 +19,10 @@ mod visitor;
 /// ```rust
 /// use overf::checked;
 ///
-/// fn main() {
-///     checked! {
-///         let a = 10usize + 5usize;
-///         let b = 20usize - 10usize;
-///         let c = 3usize * 7usize;
-///     }
+/// checked! {
+///     let a = 10usize + 5usize;
+///     let b = 20usize - 10usize;
+///     let c = 3usize * 7usize;
 /// }
 /// ```
 #[proc_macro]
@@ -41,11 +39,9 @@ pub fn checked(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 /// ```rust
 /// use overf::overflowing;
 ///
-/// fn main() {
-///     overflowing! {
-///         let a = 10usize + 5usize;
-///         let b = 200usize - 300usize; // Overflows
-///     }
+/// overflowing! {
+///     let a = 10usize + 5usize;
+///     let b = 200usize - 300usize; // Overflows
 /// }
 /// ```
 #[proc_macro]
@@ -62,11 +58,9 @@ pub fn overflowing(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 /// ```rust
 /// use overf::saturating;
 ///
-/// fn main() {
-///     saturating! {
-///         let a = usize::MAX + 1; // Saturates to usize::MAX
-///         let b = usize::MIN - 1; // Saturates to usize::MIN
-///     }
+/// saturating! {
+///     let a = usize::MAX + 1; // Saturates to usize::MAX
+///     let b = usize::MIN - 1; // Saturates to usize::MIN
 /// }
 /// ```
 #[proc_macro]
@@ -96,6 +90,8 @@ pub fn saturating(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 ///         Some(e)
 ///     }
 /// }
+///
+/// example().unwrap();
 /// ```
 #[proc_macro]
 pub fn propagating(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -111,11 +107,9 @@ pub fn propagating(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 /// ```rust
 /// use overf::wrapping;
 ///
-/// fn main() {
-///     wrapping! {
-///         let a = 10usize + 5usize;
-///         let b = 200usize - 300usize; // Overflows
-///     }
+/// wrapping! {
+///     let a = 10usize + 5usize;
+///     let b = 200usize - 300usize; // Overflows
 /// }
 /// ```
 #[proc_macro]
@@ -132,13 +126,11 @@ pub fn wrapping(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
 /// ```rust
 /// use overf::{checked, default};
 ///
-/// fn main() {
-///     checked! {
-///         let a = 10usize + 5usize; // checked
+/// checked! {
+///     let a = 10usize + 5usize; // checked
 ///         
-///         default! {
-///             let b = a + 1000; // Uses default behavior (may panic or overflow)
-///         }
+///     default! {
+///         let b = a + 1000; // Uses default behavior (may panic or overflow)
 ///     }
 /// }
 /// ```
