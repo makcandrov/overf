@@ -1,7 +1,7 @@
 use syn::{
+    BinOp, Expr, ExprField, ExprLit, ExprTry, Index, Lit, LitStr, Member, UnOp,
     spanned::Spanned,
     token::{Dot, Question},
-    BinOp, Expr, ExprField, ExprLit, ExprTry, Index, Lit, LitStr, Member, UnOp,
 };
 
 use crate::expr::method_call;

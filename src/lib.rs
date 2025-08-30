@@ -3,7 +3,12 @@
 
 use block::{Checked, MathBlock, Overflowing, Propagating, Saturating, Wrapping};
 use quote::quote;
-use syn::{parse::Parse, parse_macro_input, visit_mut::VisitMut, Block, Stmt};
+use syn::{
+    Block, Stmt,
+    parse::{Parse, ParseStream},
+    parse_macro_input,
+    visit_mut::VisitMut,
+};
 use visitor::MathBlockVisitor;
 
 mod block;
@@ -143,7 +148,7 @@ fn expand<B: MathBlock>(input: proc_macro::TokenStream) -> proc_macro::TokenStre
     struct Stmts(Vec<Stmt>);
 
     impl Parse for Stmts {
-        fn parse(input: syn::parse::ParseStream) -> syn::Result<Self> {
+        fn parse(input: ParseStream) -> syn::Result<Self> {
             Block::parse_within(input).map(Self)
         }
     }

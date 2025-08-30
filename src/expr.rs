@@ -1,8 +1,8 @@
 use proc_macro2::Span;
 use syn::{
+    Attribute, BinOp, Expr, ExprBinary, ExprMethodCall, ExprUnary, Ident, UnOp,
     punctuated::Punctuated,
     token::{Dot, Paren},
-    Attribute, BinOp, Expr, ExprBinary, ExprMethodCall, ExprUnary, Ident, UnOp,
 };
 
 pub fn method_call(

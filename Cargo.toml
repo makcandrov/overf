@@ -1,8 +1,8 @@
 [package]
 name = "overf"
 version = "0.1.3"
-rust-version = "1.75"
-edition = "2021"
+rust-version = "1.85"
+edition = "2024"
 repository = "https://github.com/makcandrov/overf"
 homepage = "https://github.com/makcandrov/overf"
 documentation = "https://docs.rs/overf"

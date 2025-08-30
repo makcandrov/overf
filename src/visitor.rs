@@ -1,10 +1,10 @@
 use std::{marker::PhantomData, mem::replace};
 
 use syn::{
+    BinOp, Expr, ExprAssign, ExprBinary, ExprUnary,
     spanned::Spanned,
     token::Eq,
-    visit_mut::{visit_expr_mut, VisitMut},
-    BinOp, Expr, ExprAssign, ExprBinary, ExprUnary,
+    visit_mut::{VisitMut, visit_expr_mut},
 };
 
 use crate::{
